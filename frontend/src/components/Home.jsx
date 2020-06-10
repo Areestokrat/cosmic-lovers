@@ -6,11 +6,17 @@ import { loadApod } from '../redux/actions/apodActions';
 
 class Home extends React.Component {
   
+  state = {
+    date: '',
+  }
+
   datePicker = () => {
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', () => {
       var elems = document.querySelectorAll('.datepicker');
       const options = {
         autoClose: true,
+        format: 'yyyy-mm-dd',
+        onSelect: (date) => this.setState({ date }),
       }
       var instances = M.Datepicker.init(elems, options);
     });
@@ -18,6 +24,13 @@ class Home extends React.Component {
   // console.log(props)
   async componentDidMount() {
     this.props.loadApod();
+  }
+  
+  newApodPicture = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    
+    this.props.loadApod(this.state.date);
   }
 
   render() {
@@ -27,6 +40,9 @@ class Home extends React.Component {
       <div className="container">
         <h3>Hello world</h3>
         <input type="text" className="datepicker" />
+        <form onSubmit={this.newApodPicture}>
+          <button className="waves-effect waves-light btn" type="submit">New pic</button>
+        </form>
         {this.props.loading && <Spinner />}
         {this.props.url && <img src={this.props.url}/>}
       </div>
@@ -44,7 +60,10 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, 
-  {
-    loadApod,
-  })(Home);
+function mapDispatchToProps(dispatch) {
+  return {
+    loadApod: (date) => dispatch(loadApod(date)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
