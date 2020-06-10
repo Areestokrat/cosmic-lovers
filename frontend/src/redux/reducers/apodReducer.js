@@ -19,7 +19,8 @@ const apodReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        url: payload,
+        url: payload.hdurl,
+        title: payload.title,
         error: false,
       };
     case APOD_ERROR:

@@ -6,10 +6,10 @@ export function apodLoading() {
   }
 }
 
-export function apodLoaded(url) {
+export function apodLoaded(imgObj) {
   return {
     type: APOD_LOADED,
-    payload: url,
+    payload: imgObj,
   }
 }
 
@@ -28,17 +28,27 @@ export function loadApod(date = null) {
         const fetchDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
         const apodUrl = `https://api.nasa.gov/planetary/apod?api_key=uVuC9iZ59HoxI55ecV7rvoUToQjuWl5exc1EeA7L&date=${fetchDate}`;
         const response = await fetch(apodUrl);
-        const { hdurl } = await response.json();
+        const { hdurl, title } = await response.json();
+        const imgObj = {
+          hdurl,
+          title,
+        };
         const img = new Image();
         img.src = hdurl;
-        img.onload = () => dispatch(apodLoaded(hdurl));
+        img.onload = () => dispatch(apodLoaded(imgObj));
       } else {
-        const apodUrl = 'https://api.nasa.gov/planetary/apod?api_key=uVuC9iZ59HoxI55ecV7rvoUToQjuWl5exc1EeA7L';
+        const today = new Date();
+        const todayDate = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+        const apodUrl = `https://api.nasa.gov/planetary/apod?api_key=uVuC9iZ59HoxI55ecV7rvoUToQjuWl5exc1EeA7L&date=${todayDate}`;
         const response = await fetch(apodUrl);
-        const { hdurl } = await response.json();
+        const { hdurl, title } = await response.json();
+        const imgObj = {
+          hdurl,
+          title,
+        };
         const img = new Image();
         img.src = hdurl;
-        img.onload = () => dispatch(apodLoaded(hdurl));
+        img.onload = () => dispatch(apodLoaded(imgObj));
       }
     } catch (err) {
       dispatch(apodError(err));

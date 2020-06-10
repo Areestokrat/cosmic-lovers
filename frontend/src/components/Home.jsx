@@ -21,30 +21,30 @@ class Home extends React.Component {
       var instances = M.Datepicker.init(elems, options);
     });
   }
-  // console.log(props)
+
   async componentDidMount() {
     this.props.loadApod();
   }
   
   newApodPicture = (e) => {
-    e.preventDefault();
-    console.log(e.target);
-    
+    e.preventDefault();    
     this.props.loadApod(this.state.date);
   }
 
   render() {
     this.datePicker();
-    // console.log(this.props)
     return (
       <div className="container">
-        <h3>Hello world</h3>
-        <input type="text" className="datepicker" />
-        <form onSubmit={this.newApodPicture}>
-          <button className="waves-effect waves-light btn" type="submit">New pic</button>
-        </form>
+        <h3>Сегодня космос выглядит вот так</h3>
+        <h3>Посмотри, как он выглядел в другие дни</h3>
+        <div className="row">
+          <input type="text" className="datepicker col s10" />
+          <form onSubmit={this.newApodPicture}>
+            <button className="btn" type="submit">Посмотреть</button>
+          </form>
+        </div>
         {this.props.loading && <Spinner />}
-        {this.props.url && <img src={this.props.url}/>}
+        {this.props.url && <img src={this.props.url} width="100%" alt={this.props.title}/>}
       </div>
     )
   }
@@ -52,10 +52,10 @@ class Home extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state);
   return {
     loading: state.apodReducer.loading,
     url: state.apodReducer.url,
+    title: state.apodReducer.title,
     error: state.apodReducer.error,
   }
 }
