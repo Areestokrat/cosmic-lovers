@@ -1,16 +1,15 @@
 import { REGISTER_SUCCESSFUL, AUTH_SUCCESSFUL, LOGOUT } from './action-types';
 
-export function authAction(userName) {
+export function authAction(authData) {
   return {
     type: AUTH_SUCCESSFUL,
-    payload: userName,
+    payload: authData,
   }
 };
 
-export function registerAction(userName) {
+export function registerAction() {
   return {
     type: REGISTER_SUCCESSFUL,
-    payload: userName,
   }
 };
 

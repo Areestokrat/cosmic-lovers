@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://Areestokrat:DaveLeeFletcher1234@areecluster-ziydv.mongodb.net/cosmicLovers?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const loginRouter = require('./routers/login');
 const registerRouter = require('./routers/register');

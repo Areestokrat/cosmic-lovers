@@ -53,7 +53,7 @@ class Register extends React.Component {
         }
       })
     } else if (result.newUser === 'true') {
-      this.props.registerAction(result.userName);
+      // this.props.registerAction(result.userName);
       this.setState((prevState) => {
         return {
           ...prevState,
@@ -66,7 +66,7 @@ class Register extends React.Component {
   render() {
 
     if (this.state.newUser) {
-      return <Redirect to="/" />
+      return <Redirect to="/login" />
     }
 
     return (

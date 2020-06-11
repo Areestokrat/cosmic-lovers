@@ -45,7 +45,11 @@ class Login extends React.Component {
     if (result.error) {
       window.alert(result.error);
     } else {
-      this.props.authAction(result.userName);
+      const authData = {
+        token: result.token,
+        userName: result.userName,
+      }
+      this.props.authAction(authData);
       this.setState((prevState) => {
         return {
           ...prevState,
@@ -57,7 +61,6 @@ class Login extends React.Component {
   
   render() {
     if (this.state.correctAuth) {
-      console.log(this.state);
       return <Redirect to="/" />
     }
     return (

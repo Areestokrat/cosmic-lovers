@@ -5,7 +5,7 @@ router.post('/', async (req, res) => {
   const { login, password, email } = req.body;
   const user = await User.findOne({ login });
   if (user) {
-    res.json({ 'exists': 'true' });
+    res.status(200).json({ 'exists': 'true' });
   } else {
     const newUser = new User({
       login,
@@ -13,10 +13,9 @@ router.post('/', async (req, res) => {
       email,
     });
     await newUser.save();
-    res.json({
+    res.status(200).json({
       newUser: 'true',
-      userName: newUser.login,
-    })
+    });
   }
 })
 

@@ -3,28 +3,27 @@ import { REGISTER_SUCCESSFUL, AUTH_SUCCESSFUL, LOGOUT } from '../actions/action-
 const initialState = {
   isAuthenticated: false,
   userName: '',
+  token: '',
 }
 
 const authRegReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case REGISTER_SUCCESSFUL:
-      window.localStorage.setItem('isAuth', 'true')
-      window.localStorage.setItem('userName', payload)
       return {
         ...state,
         isAuthenticated: true,
-        userName: payload,
       }
     case AUTH_SUCCESSFUL:
-      window.localStorage.setItem('isAuth', 'true')
-      window.localStorage.setItem('userName', payload)
+      window.localStorage.setItem('token', payload.token);
+      window.localStorage.setItem('userName', payload.userName);
       return {
         ...state,
         isAuthenticated: true,
-        userName: payload,
+        userName: payload.userName,
+        token: payload.token,
       }
     case LOGOUT:
-      window.localStorage.removeItem('isAuth');
+      window.localStorage.removeItem('token');
       window.localStorage.removeItem('userName');
       return {
         ...state,
